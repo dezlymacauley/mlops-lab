@@ -1,0 +1,14 @@
+[env]
+_.file = ".env"   
+#______________________________________________________________________________
+
+[tools]
+aws-cli = { version = "latest", symlink_bins = "true" }
+eza = "latest"
+"github:hashicorp/terraform-ls" = "latest"
+terraform = "latest"
+#______________________________________________________________________________
+
+[shell_alias]
+structure = "eza --tree --git-ignore --all"
+#______________________________________________________________________________
