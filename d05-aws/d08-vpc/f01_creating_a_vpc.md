@@ -143,9 +143,10 @@ Click on `Actions`, then click `Attach to VPC`
 - Available VPCs: Select the `demo-vpc`
 _______________________________________________________________________________
 
+### Create a route table
+
 In order to make a subnet public, that subnet has to be associated with a
 route table, that has an entry to an internet gateway.
-
 _______________________________________________________________________________
 
 On the left sidebar, click `Route tables`
