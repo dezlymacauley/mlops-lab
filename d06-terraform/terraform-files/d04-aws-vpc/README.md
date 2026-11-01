@@ -30,4 +30,6 @@ To destroy the infastructure
 ```bash
 terraform destroy
 ```
+
+When prompted, type `yes` and press Enter.
 _______________________________________________________________________________
