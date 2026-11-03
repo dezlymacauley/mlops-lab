@@ -1,0 +1,17 @@
+# Usage Guide
+
+# users = {
+#   username = string
+#   roles = [readonly, developer, admin, auditor]
+# }
+# _____________________________________________________________________________
+
+users:
+  - username: "kevin"
+    roles: [readonly, developer]
+
+  - username: "jane"
+    roles: [admin, auditor]
+
+  - username: "ben"
+    roles: [readonly]
