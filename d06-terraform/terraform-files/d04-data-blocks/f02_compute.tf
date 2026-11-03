@@ -140,7 +140,17 @@ output "ubuntu_ami_created" {
 
 #______________________________________________________________________________
 
-# resource "aws_instance" "compute" {
-#   ami           = data.aws_ami.ubuntu.id
-#   instance_type = "t3.micro"
-# }
+resource "aws_instance" "ubuntu_instance" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
+
+  # Configure the storage settings for the virtual computer
+  root_block_device {
+    volume_size = 8
+    volume_type = "gp3"
+
+    # Ensures that the storage is deleted when the EC2 instance is deleted
+    delete_on_termination = true
+  }
+
+}
