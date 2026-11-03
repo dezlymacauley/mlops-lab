@@ -49,21 +49,6 @@
 
 */
 
-variable "instance_type" {
-  type    = string
-  default = "t3.micro"
-}
-
-variable "architecture" {
-  type    = string
-  default = "x86_64"
-}
-
-variable "ubuntu_version" {
-  type    = string
-  default = "26.04"
-}
-
 # This is a `data` block.
 # A data block is used when you want Terraform to retrieve some information
 # that was not created in this Terraform file
@@ -107,13 +92,14 @@ data "aws_ami" "ubuntu" {
 
 #______________________________________________________________________________
 
-output "instance_type" {
-  value = var.instance_type
+output "aws_ec2_instance_type" {
+  value = var.aws_ec2_instance_type
 }
 
 output "ubuntu_version" {
   value = var.ubuntu_version
 }
+#______________________________________________________________________________
 
 output "ubuntu_ami_id" {
   value = data.aws_ami.ubuntu.id
@@ -142,12 +128,12 @@ output "ubuntu_ami_created" {
 
 resource "aws_instance" "ubuntu_instance" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
+  instance_type = var.aws_ec2_instance_type
 
   # Configure the storage settings for the virtual computer
   root_block_device {
-    volume_size = 8
-    volume_type = "gp3"
+    volume_size = var.aws_ec2_volume_size
+    volume_type = var.aws_ec2_volume_type
 
     # Ensures that the storage is deleted when the EC2 instance is deleted
     delete_on_termination = true
