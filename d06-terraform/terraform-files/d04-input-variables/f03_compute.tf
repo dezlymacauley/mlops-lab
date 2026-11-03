@@ -49,6 +49,14 @@
 
 */
 
+# This is a `data` block. 
+# A data block is used when you want Terraform to retrieve some information
+# that was not created in this Terraform files
+# E.g. An AMI (Amazon Machine Image)
+
+# `ubuntu` is a name of my choosing that I'm using to store 
+# the results of the search so that I can use those results in another section
+# of this file.
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners = ["099720109477"]
