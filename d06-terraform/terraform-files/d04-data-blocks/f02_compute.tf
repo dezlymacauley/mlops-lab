@@ -1,5 +1,5 @@
 /*
-  ABOUT: f03_compute.tf
+  ABOUT: f02_compute.tf
 
   _____________________________________________________________________________
 
@@ -51,27 +51,71 @@
 
 # This is a `data` block. 
 # A data block is used when you want Terraform to retrieve some information
-# that was not created in this Terraform files
+# that was not created in this Terraform file
 # E.g. An AMI (Amazon Machine Image)
 
 # `ubuntu` is a name of my choosing that I'm using to store 
 # the results of the search so that I can use those results in another section
 # of this file.
 data "aws_ami" "ubuntu" {
-  most_recent = true
+
+  # This is the AWS ID of the account that owns the image
+  # 099720109477 is the account ID of Canonical, the organisation behind 
+  # the Ubuntu operating system.
+
+  # I got this info from here:
+  # https://ubuntu.com/aws/docs/aws-how-to/instances/find-ubuntu-images/#finding-images-for-ec2-and-eks
+  # Click the tab `Using the AWS console`
   owners = ["099720109477"]
 
+  // Filter by name
   filter {
-    name = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-*-22.04-amd64-server-*"]
+    name   = "name"
+
+  # I got this info from here:
+  # https://ubuntu.com/aws/docs/aws-how-to/instances/find-ubuntu-images/#finding-images-for-ec2-and-eks
+  # Click the tab `Using the AWS console`
+ 
+  # Got this from the Ubuntu docs. How does it compare to the instructors
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 
   filter {
-    name = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
+
+  # This tells Terraform to pick the most reccent AMI if the search
+  # returns multiple results
+  most_recent = true
+
 }
 
-resource "aws_instance" "compute" {
-  ami = data.aws_ami.ubuntu 
+#______________________________________________________________________________
+
+output "ubuntu_ami_id" {
+  value = data.aws_ami.ubuntu.id
 }
+
+output "ubuntu_ami_name" {
+  value = data.aws_ami.ubuntu.name
+}
+
+output "ubuntu_ami_created" {
+  value = data.aws_ami.ubuntu.creation_date
+}
+
+# NOTE: If you run `terraform apply -auto-approve`,
+# you should get this back
+
+# The variables are printed in alphabetical order
+
+# ubuntu_ami_created = "2026-10-21T06:42:18.000Z"
+# ubuntu_ami_id = "ami-033ea4ff4a9c726dc"
+# ubuntu_ami_name = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20261021"
+
+#______________________________________________________________________________
+
+# resource "aws_instance" "compute" {
+#   ami = data.aws_ami.ubuntu 
+# }
