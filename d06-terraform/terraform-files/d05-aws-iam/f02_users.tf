@@ -39,5 +39,8 @@ output "users_from_yaml" {
 
 # SECTION: Creating the users
 
+resource "aws_iam_user" "users" {
+  
+}
 
 #______________________________________________________________________________
